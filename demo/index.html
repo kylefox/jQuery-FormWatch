@@ -69,12 +69,22 @@
             state = $('#state'),
             submit = $("#submit");
         
-        form.bind('modified', function() {
+        function log(msg) {
+          if(console && console.log) {
+            console.log(msg)
+          }
+        }
+        
+        form.bind('modified', function(event, newData, oldData, originalData) {
+          log('-- oldData:');
+          log(oldData);
+          log('-- newData:');
+          log(newData);
           state.text('Modified!');
           submit.attr('disabled', null);
         });
         
-        form.bind('reverted', function() {
+        form.bind('reverted', function(event, newData, oldData, originalData) {
           state.text('Reverted - nothing to save!');
           submit.attr('disabled', 'disabled');
         });

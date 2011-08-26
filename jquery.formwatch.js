@@ -1,16 +1,26 @@
 (function($) {
   
+  function _eventArgs() {
+    return $.map(arguments, function(arg) {
+      if('deparam' in $) {
+        return $.deparam(arg);
+      }
+      return arg;
+    });
+  }
+  
   function _checkChange() {
     var form = $(this),
         oldData = form.data('oldData'),
         originalData = form.data('originalData'),
-        newData = form.serialize();
+        newData = form.serialize(),
+        args = _eventArgs(newData, oldData, originalData);
     if(newData !== oldData) {
-      form.trigger('modified');
+      form.trigger('modified', args);
       form.data('dirty', true);
     }
     if(form.data('dirty') && newData === originalData) {
-      form.trigger('reverted');
+      form.trigger('reverted', args);
       form.data('dirty', false);
     }
     form.data('oldData', newData);
