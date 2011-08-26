@@ -5,7 +5,7 @@ What it does
 
 This plugin lets you watch a form for data changes. This lets you, for example, easily notify users when they have unsaved changes (particularly important in single-page apps).
 
-You can open up `demo/index.html` to see the basic idea in action.
+You can [view the demo](http://dl.dropbox.com/u/780754/jQuery-FormWatch/demo/index.html) to see the basic idea in action.
 
 Usage
 =====
