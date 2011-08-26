@@ -1,3 +1,8 @@
+/*
+    jQuery FormWatch: easily monitor changes in form data.
+    https://github.com/kylefox/jQuery-FormWatch
+    Version 0.1
+*/
 (function($) {
   
   function _eventArgs() {
