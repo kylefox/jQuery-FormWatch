@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery FormWatch</title>
+  <style type="text/css" media="screen">
+    body { font: normal 16px/24px Helvetica, Arial, sans-serif; color: #000; width: 380px; margin: 50px auto; }
+    h1 { border-bottom: 5px solid #000; padding-bottom: 10px; }
+    form div { border-bottom: 1px solid #ddd; margin: 0; padding: 15px 0; }
+    form .in { overflow: hidden; }
+    form .in label { display: block; width: 100px; float: left; }
+    form .in li label { display: inline; float: none; margin-left: 5px; }
+    form .in ul { float: left; margin: 0; list-style-type: none; padding: 0; }
+    input[type="checkbox"] { margin: 0 10px 0 100px; }
+    #state { background: #ffff77; text-align: center; padding: 5px;}
+    code { color: #000099; text-decoration: underline; cursor: pointer; }
+    code:hover { color: #000; }
+  </style>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="jquery.bbq.js" type="text/javascript" charset="utf-8"></script>
+  <script src="../jquery.formwatch.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+
+  <h1>Airplane Food!</h1>
+  
+  <p>This form will only allow the user to save if the data has changed. Try changing <strong>Name</strong> to yours, then back to <em>Bob Jones</em> to see the reverted event get fired.</p>
+  <p>If you save the form, the new data becomes the initial data, starting the process over.</p>
+
+  <form action="." method="get">
+    <div class="in">
+      <label for="name">Name</label>
+      <input id="name" type="text" name="name" value="Bob Jones" />
+    </div>
+    
+    <div class="in">
+      <label>Entree</label>
+      <ul>
+        <li><input id="chicken" type="radio" name="entree" value="chicken" checked="checked"><label for="chicken">Chicken</label></li>
+        <li><input id="beef" type="radio" name="entree" value="beef"><label for="beef">Beef</label></li>
+        <li><input id="lamb" type="radio" name="entree" value="lamb"><label for="lamb">Lamb</label></li>
+        <li><input id="pasta" type="radio" name="entree" value="pasta"><label for="pasta">Pasta</label></li>
+      </ul>
+    </div>
+    
+    <div class="in">
+      <label for="drink">Drink</label>
+      <select id="drink" name="drink">
+        <option value="whisky" selected="selected">Whisky</option>
+        <option value="beer">Beer</option>
+        <option value="wine">Wine</option>
+        <option value="coffe">Coffee</option>
+      </select>
+    </div>
+    
+    <div><input id="veg" type="checkbox" name="veg" /><label for="veg">Make it vegetarian!</label></div>
+    
+    <div><input id="submit" type="submit" value="Save changes" disabled="disabled" /></div>
+    
+  </form>
+    
+  <p id="state">Initial state</p>
+  <p>Alert <code>$('form').data('dirty');</code></p>
+    
+  <script type="text/javascript" charset="utf-8">
+      $(function() {
+        
+        var form = $('form'),
+            state = $('#state'),
+            submit = $("#submit");
+        
+        form.bind('modified', function() {
+          state.text('Modified!');
+          submit.attr('disabled', null);
+        });
+        
+        form.bind('reverted', function() {
+          state.text('Reverted - nothing to save!');
+          submit.attr('disabled', 'disabled');
+        });
+        
+        form.bind('submit', function(event) {
+          alert('Form has been saved!');
+          form.watch();
+          submit.attr('disabled', 'disabled');
+          state.text('Initial state');
+          event.preventDefault();
+        });
+        
+        form.watch();
+        
+        $('code').click(function() {
+          alert(form.data('dirty'));
+        });
+        
+        
+        
+      });
+  </script>
+
+
+</body>
+</html>
