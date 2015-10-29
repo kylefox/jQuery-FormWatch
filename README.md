@@ -13,7 +13,11 @@ Usage
 Monitor the form you're interested in:
 
     $('form').watch();
-  
+    
+Optionally, you can pass delay option:
+
+    $('form').watch(400); // 400ms delay
+
 Then bind to the watch events:
 
     // 'modified' - Fired when data changes.
